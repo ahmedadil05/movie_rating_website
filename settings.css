@@ -1,0 +1,277 @@
+
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #141414;
+    color: #fff;
+  }
+  
+  .home {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 12rem;
+    background-color: #1f1f1f;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    box-shadow: 10px 0px 20px rgba(97, 0, 194, 0.2);
+    
+    position: fixed; /* Makes the sidebar fixed */
+    top: 0; /* Keeps it at the top of the page */
+    left: 0; /* Keeps it on the left side */
+    height: 100vh; /* Ensures the sidebar covers the full height of the viewport */
+    z-index: 1000; /* Makes sure the sidebar stays on top of other elements */
+  }
+  
+  .sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon{
+    font-size: 1.5rem;
+    padding-bottom: 3px;
+    fill: #fff;
+  }
+  
+  .sidebar .logo h1 {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+  .sidebar nav ul{
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar nav ul li {
+    margin: 1rem 0;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+  }
+  .sidebar nav ul li a{
+    text-decoration: none;
+    color: #ccc;
+  }
+  .bottom-menu ul{
+    list-style: none;
+  }
+
+.bottom-menu ul li {
+    margin: 1rem 0;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+  }
+.bottom-menu ul li a{
+  text-decoration: none;
+  color: #ccc;
+  }
+  
+  .bottom-menu ul li a.active {
+    color: #fff;
+  }
+  .sidebar nav ul li:hover, .bottom-menu ul li:hover {
+    color: #fff;
+    border-bottom: #6100c2 solid 2px;
+  }
+
+/* Main Content */
+.content {
+    width: 100%;
+    padding: 48px;
+    margin-left: 12rem;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Settings Section */
+.settings-section {
+    margin-bottom: 40px;
+    
+}
+
+.settings-section h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="checkbox"] {
+    padding: 10px;
+    background-color: #222;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+/* Delete Button */
+.update-btn {
+    padding: 10px 20px;
+    background-color: #6100c2;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #6100c2;
+}
+.delete-btn {
+    padding: 10px 20px;
+    background-color: #ff4c4c;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #e43b3b;
+}
+
+/* Support List */
+.support-list {
+    list-style: none;
+    padding: 0;
+}
+
+.support-list li {
+    margin-bottom: 10px;
+}
+
+.support-list a {
+    color: #6A0DAD;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.support-list a:hover {
+    text-decoration: underline;
+}
+
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modal.visible {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #333;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  width: 20rem;
+}
+
+.modal-content h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.modal-content p {
+  margin-bottom: 1rem;
+}
+
+.modal-content button {
+  padding: 0.8rem 1.5rem;
+  background-color: #6100c2;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #4a009b;
+}
+
+.modal-content .modal-buttons #confirm-yes-delete,
+.modal-content .modal-buttons #confirm-no-delete {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  padding: 12px 24px; /* Adds padding to the buttons */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.modal-content .modal-buttons #confirm-no-delete {
+  background-color: #047948;
+}
+
+.modal-content .modal-buttons #confirm-yes-delete:hover {
+  background-color: #ff6666; /* Slightly lighter red on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
+}
+
+.modal-content .modal-buttons #confirm-no-delete:hover {
+  background-color: #06a056; /* Slightly lighter green on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
+}

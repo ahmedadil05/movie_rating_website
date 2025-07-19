@@ -1,0 +1,686 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #141414;
+    color: #fff;
+  }
+  
+.home {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  /* Sidebar */
+.sidebar {
+    width: 12rem;
+    background-color: #1f1f1f;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    box-shadow: 10px 0px 20px rgba(97, 0, 194, 0.2); 
+  }
+  
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+.logo-icon{
+    font-size: 1.5rem;
+    padding-bottom: 3px;
+    fill: #fff;
+  }
+  
+.sidebar .logo h1 {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  
+.sidebar nav ul{
+    list-style: none;
+    padding: 0;
+  }
+  
+.sidebar nav ul li {
+    margin: 1rem 0;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+  }
+.sidebar nav ul li a{
+      text-decoration: none;
+      color: #ccc;
+  }
+  .bottom-menu ul{
+    list-style: none;
+  }
+
+.bottom-menu ul li {
+    margin: 1rem 0;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+  }
+.bottom-menu ul li a{
+  text-decoration: none;
+  color: #ccc;
+  }
+  
+.sidebar nav ul li a.active{
+    color: #fff;
+  }
+.sidebar nav ul li:hover, .bottom-menu ul li:hover {
+    color: #fff;
+    border-bottom: #6100c2 solid 2px;
+  }
+  
+/* Top-right admin buttons */
+.top-right-buttons {
+  position: absolute; /* Change from fixed to absolute */
+  top: 1.5rem;        /* Distance from the top of the container */
+  right: 3rem;        /* Distance from the right of the container */
+  display: flex;      /* Buttons are displayed in a row or column */
+  gap: 10px;          /* Space between the buttons */
+  z-index: 3;         /* Ensure buttons appear above other content */
+}
+
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #007bff; /* Blue */
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 10px rgba(0, 123, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background-color: #dc3545; /* Red */
+  color: white;
+  box-shadow: 0 4px 6px rgba(220, 53, 69, 0.3);
+}
+
+.delete-btn:hover {
+  background-color: #a71d2a;
+  box-shadow: 0 6px 10px rgba(220, 53, 69, 0.5);
+  transform: scale(1.05);
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modal.visible {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #333;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  width: 20rem;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  margin-bottom: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-buttons .btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#confirm-yes-delete {
+  background-color: #ff4c4c;
+}
+
+#confirm-yes-delete:hover {
+  background-color: #ff6666;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#confirm-no-delete {
+  background-color: #047948;
+}
+
+#confirm-no-delete:hover {
+  background-color: #06a056;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Edit Modal */
+#edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Darker background for Edit Modal */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  visibility: hidden; /* Initially hidden */
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show Edit Modal */
+#edit-modal.visible {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Modal Content */
+#edit-modal .modal-content {
+  background-color: #222; /* Slightly darker background */
+  color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: left; /* Align text to the left for form readability */
+  width: 80%; /* Wider modal for form */
+  max-width: 1200px; /* Maximum width */
+  max-height: 90%; /* Prevent overflow */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Title */
+#edit-modal .modal-content h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #d4d4d4;
+}
+
+/* Form Styling */
+#edit-modal .form-section {
+  margin-bottom: 20px;
+}
+
+#edit-modal .form-group p {
+  margin-top:8px;
+  margin-bottom: 2px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+#edit-modal .form-group input,
+#edit-modal .form-group textarea,
+#edit-modal .form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  color: #fff;
+  background: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+#edit-modal .form-group input:focus,
+#edit-modal .form-group textarea:focus,
+#edit-modal .form-group select:focus {
+  border-color: #6100c2;
+  outline: none;
+}
+
+/* Media Section */
+#edit-modal .media-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#edit-modal .image-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #444;
+  background: #222;
+  width: 100%;
+  height: 200px;
+  color: #aaa;
+  cursor: pointer;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#edit-modal .image-button img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+}
+
+#edit-modal .image-button:hover {
+  border-color: #6100c2;
+  background-color: #1f1f1f;
+}
+
+/* Buttons */
+#edit-modal .modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+#edit-modal .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+#edit-modal .btn:hover {
+  transform: scale(1.05);
+}
+
+#edit-modal #submit-changes {
+  background-color: #6100c2;
+  color: #fff;
+}
+
+#edit-modal #submit-changes:hover {
+  background-color: #7a26d8;
+}
+
+#edit-modal #close-edit-modal {
+  background-color: #444;
+  color: #fff;
+}
+
+#edit-modal #close-edit-modal:hover {
+  background-color: #555;
+}
+
+
+  /* Main Content */
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+  
+  .movie-page {
+    position: relative;
+  }
+  
+  /* Hero Section - Background Image */
+  .hero-section {
+    width: 100%;
+    height: 50vh; /* First half of the screen */
+    position: relative;
+  }
+  
+  .hero-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(1.7px); /* Adjust the value for more or less blur */
+  }
+  
+  /* Movie Info Block */
+  .movie-info {
+    position: relative;
+    top: -100px; 
+    margin: 0 auto;
+    display: flex;
+    gap: 1.5rem;
+    background-color: #1f1f1f;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 1100px;
+    z-index: 10; /* Ensures this block is above other elements */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .poster img {
+    width: 150px;
+    height: 225px;
+    border-radius: 8px;
+  }
+  
+  .details-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .details-content h1 {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .trailer-rate {
+    display: flex; /* Use Flexbox for layout */
+    flex-wrap: wrap; /* Allow elements to wrap to the next line */
+    gap: 0.5rem; /* Add space between items */
+    align-items: center; /* Ensure vertical alignment is consistent */
+  }
+  
+  .details-content .trailer-rate .trailer {
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  .details-content .trailer-rate .rating {
+    background-color: #ffc107;
+    color: #000;
+    font-size: 1rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+  }
+  .details-content .trailer-rate .trailer:hover {
+    transform: scale(1.05);
+  }
+  
+  .details-content p {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .meta .info{
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .btn-watch {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ff3d3d;
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    height: 3rem;
+    width: 10rem;
+    padding:0 0 0 1rem;
+  }
+  
+  .btn-watch i {
+    font-size: 1.2rem;
+  }
+  
+  .btn-watch:hover {
+    background-color: #e32b2b;
+    transform: scale(1.05);
+  }
+
+  .btn-favorite {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background-color: transparent;
+    border: 2px solid #ff3d3d;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff; /* Default icon color */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 10px #0000004d;
+}
+
+.btn-favorite:hover {
+    background-color: #0000004d;
+    color: #ff3d3d; /* Change icon color when hovered */
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.btn-favorite.active {
+    background-color: #0000004d;
+    color: #ff3d3d;
+    border: 2px solid #ff3d3d;
+}
+
+.btn-favorite.active:hover {
+    transform: scale(1.2); /* Slightly larger hover effect */
+}
+
+  
+  
+  /* User Reviews Section */
+  .user-review-title {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto; /* Center the element horizontally */
+    font-size: 1.5rem;
+    margin-bottom: 1rem; /* Keep the bottom margin */
+  }
+  
+  .reviews {
+    margin: 1rem auto 2rem auto;
+    width: 90%;
+    max-width: 1100px;
+    background-color: #1f1f1f;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  
+  .comment-box {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .comment-box textarea {
+    flex: 1;
+    height: 5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    outline: none;
+    resize: none;
+  }
+  
+  .comment-box .post-btn {
+    background: #6100c2;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s;
+  }
+  
+  .comment-box .post-btn:hover {
+    background: #4a00a0;
+    transform: scale(1.05);
+  }
+  
+
+  /* User Reviews Section */
+.user-reviews {
+    width: 90%;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1f1f1f;
+    border-radius: 12px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .user-reviews h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-align: center;
+  }
+  
+  /* Reviews Container */
+  .reviews-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* Individual Review Card */
+  .review-card {
+    background-color: #2a2a2a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out the content */
+  }
+  
+  
+  /* User Info Section */
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #6100c2;
+  }
+  
+  .user-details h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0;
+  }
+  
+  .user-details p {
+    color: #ffc107;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  /* Review Text */
+  .review-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+  }
+
+  .delete-icon {
+    color: red;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative; /* Change to relative for better alignment */
+    margin-left: auto; /* Pushes the icon to the right in flex container */
+    visibility: visible; /* Ensure it's always visible */
+    transition: transform 0.3s ease;
+  }
+  
+  .delete-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  
+  
